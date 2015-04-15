@@ -7,7 +7,8 @@
 //
 
 #import "ProfileViewController.h"
-#import "User.h"
+#import <TwitterKit/TwitterKit.h>
+#import "LoginViewController.h"
 
 @interface ProfileViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
@@ -22,71 +23,91 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.profileImage.layer.cornerRadius = self.profileImage.frame.size.width / 2;
-    [self getTwitterProfile];
+    self.profileImage.layer.masksToBounds = YES;
+    self.logoutButton.layer.cornerRadius = 15;
+    [self getLargeProfile];
     // Do any additional setup after loading the view.
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self checkUser];
 }
 
 #pragma mark - Actions
 
 - (IBAction)onLogoutButtonTapped:(id)sender {
-    [self signOut:nil];
+    [[Twitter sharedInstance] logOut];
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    LoginViewController *vc = [sb instantiateViewControllerWithIdentifier:@"LoginViewController"];
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
-- (void)signOut:(id)sender {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sign Out" message:@"Are you sure you want to sign out of Airport?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Sign Out", nil];
-    [alert show];
+- (void)setProfile {
+    [[[Twitter sharedInstance] APIClient] loadUserWithID:[[Twitter sharedInstance] session].userID completion:^(TWTRUser *user, NSError *error) {
+        if (user) {
+            NSString *image = [NSString stringWithFormat:@"%@", user.profileImageLargeURL];
+            NSURL *url = [NSURL URLWithString:image];
+            NSData *data = [NSData dataWithContentsOfURL:url];
+            self.profileImage.image = [UIImage imageWithData:data];
+
+            [self.navigationItem setTitle:[user name]];
+        }
+    }];
 }
 
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if (buttonIndex !=1) {
-        return;
-    }
-    [[User sharedInstance] logout];
-    [self checkUser];
-}
+- (void)getLargeProfile {
+    [[[Twitter sharedInstance] APIClient] loadUserWithID:[[Twitter sharedInstance] session].userID completion:^(TWTRUser *user, NSError *error) {
+        if (user) {
+            NSString *userString = @"https://api.twitter.com/1.1/users/show.json";
+            NSDictionary *params = @{@"screen_name" : [user screenName]};
+            NSError *error;
+            NSURLRequest *request = [[[Twitter sharedInstance] APIClient] URLRequestWithMethod:@"GET"
+                                                                                           URL:userString
+                                                                                    parameters:params
+                                                                                         error:&error];
+            if (request) {
+                [[[Twitter sharedInstance] APIClient] sendTwitterRequest:request completion:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                    if (data) {
+                        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&connectionError];
+                        NSLog(@"Data: %@", json);
 
-#pragma mark - User
-- (void)checkUser {
-    if ([[User sharedInstance] isLoggedIn]) {
-        NSLog(@"CPAppDelegate.application:didFinishLaunchingWithOptions: user is logged in");
-    }
-    else {
-        NSLog(@"AppDelegate User is not logged in");
-        [self performSegueWithIdentifier:@"showLogin" sender:self];
-    }
-}
+                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                            NSString *image = [NSString stringWithFormat:@"%@", [json objectForKey:@"profile_image_url"]];
+                            image = [image stringByReplacingOccurrencesOfString:@"_normal" withString:@"_reasonably_small"];
+                            NSURL *url = [NSURL URLWithString:image];
+                            NSData *data = [NSData dataWithContentsOfURL:url];
 
-#pragma mark - NSObject
-
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-#pragma mark - Social
-
-- (void)getTwitterProfile {
-    User *user = [User sharedInstance];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSString *profile = user.profileImageUrl;
-        NSURL *profileURL = [NSURL URLWithString:profile];
-
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            NSData *profileData = [NSData dataWithContentsOfURL:profileURL];
-            if (profileData) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    self.profileImage.image = [UIImage imageWithData:profileData];
-                });
+                            NSString *name = [NSString stringWithFormat:@"%@", json[@"name"]];
+                            NSString *bio = [NSString stringWithFormat:@"%@", json[@"description"]];
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                self.profileImage.image = [UIImage imageWithData:data];
+                                self.profileName.text = name;
+                                self.bioLabel.text = bio;
+                                [self saveUserName:name withBio:bio andImage:image];
+                            });
+                            
+                        });
+                    }
+                }];
             }
-        });
-    });
-    self.profileName.text = user.screenName;
-    self.bioLabel.text = user.status;
-    [self.navigationItem setTitle:[user name]];
+        }
+    }];
 }
+
+
+
+- (void)saveUserName:(NSString *)user withBio:(NSString *)bio andImage:(NSString *)imageUrl {
+
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:user forKey:@"userName"];
+    [defaults setObject:bio forKey:@"bio"];
+    [defaults setObject:imageUrl forKey:@"image"];
+    [defaults synchronize];
+    NSLog(@"Data saved: %@", defaults);
+}
+
+
+
+
 
 @end

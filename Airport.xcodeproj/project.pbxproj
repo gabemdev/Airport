@@ -7,9 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6D2FC0C91ADD7886009A5A24 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D2FC0C81ADD7886009A5A24 /* QuartzCore.framework */; };
+		6DC812F01ADE104B000AF071 /* TwitterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DC812EE1ADE104B000AF071 /* TwitterKit.framework */; };
+		6DC812F11ADE104B000AF071 /* TwitterKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6DC812EF1ADE104B000AF071 /* TwitterKitResources.bundle */; };
+		6DC812F31ADE16B3000AF071 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DC812F21ADE16B3000AF071 /* MapKit.framework */; };
+		6DC812F51ADE16B8000AF071 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DC812F41ADE16B8000AF071 /* CoreLocation.framework */; };
+		6DC812F81ADE1B4B000AF071 /* AirportKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DC812F71ADE1B4B000AF071 /* AirportKit.m */; };
+		6DC812FB1ADE1B63000AF071 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DC812FA1ADE1B63000AF071 /* Constants.m */; };
 		6DD5F8901ADCA89800C997A6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DD5F88F1ADCA89800C997A6 /* main.m */; };
 		6DD5F8931ADCA89800C997A6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DD5F8921ADCA89800C997A6 /* AppDelegate.m */; };
-		6DD5F8961ADCA89800C997A6 /* Airport.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6DD5F8941ADCA89800C997A6 /* Airport.xcdatamodeld */; };
 		6DD5F8991ADCA89800C997A6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DD5F8981ADCA89800C997A6 /* ViewController.m */; };
 		6DD5F89C1ADCA89800C997A6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6DD5F89A1ADCA89800C997A6 /* Main.storyboard */; };
 		6DD5F89E1ADCA89800C997A6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DD5F89D1ADCA89800C997A6 /* Images.xcassets */; };
@@ -18,8 +24,6 @@
 		6DD5F8B91ADCAC7A00C997A6 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DD5F8B71ADCAC7A00C997A6 /* Crashlytics.framework */; };
 		6DD5F8BA1ADCAC7A00C997A6 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DD5F8B81ADCAC7A00C997A6 /* Fabric.framework */; };
 		6DD5F8BD1ADCB25700C997A6 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DD5F8BC1ADCB25700C997A6 /* LoginViewController.m */; };
-		6DD5F8C21ADCB2D500C997A6 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DD5F8C11ADCB2D500C997A6 /* User.m */; };
-		6DD5F8C51ADCB37F00C997A6 /* AirportAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DD5F8C41ADCB37F00C997A6 /* AirportAPIClient.m */; };
 		6DE653DF1ADD6F7C00B0CF2B /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DE653DE1ADD6F7C00B0CF2B /* ProfileViewController.m */; };
 		F43EEFA1ADE010F76789B2D9 /* libPods-Airport.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC8963520ED568CD07B0846B /* libPods-Airport.a */; };
 /* End PBXBuildFile section */
@@ -35,12 +39,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6D2FC0C81ADD7886009A5A24 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		6DC812EE1ADE104B000AF071 /* TwitterKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TwitterKit.framework; sourceTree = "<group>"; };
+		6DC812EF1ADE104B000AF071 /* TwitterKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = TwitterKitResources.bundle; path = TwitterKit.framework/Versions/A/Resources/TwitterKitResources.bundle; sourceTree = "<group>"; };
+		6DC812F21ADE16B3000AF071 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		6DC812F41ADE16B8000AF071 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		6DC812F61ADE1B4B000AF071 /* AirportKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AirportKit.h; path = Model/AirportKit.h; sourceTree = "<group>"; };
+		6DC812F71ADE1B4B000AF071 /* AirportKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AirportKit.m; path = Model/AirportKit.m; sourceTree = "<group>"; };
+		6DC812F91ADE1B63000AF071 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = Model/Constants.h; sourceTree = "<group>"; };
+		6DC812FA1ADE1B63000AF071 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Constants.m; path = Model/Constants.m; sourceTree = "<group>"; };
 		6DD5F88A1ADCA89700C997A6 /* Airport.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Airport.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DD5F88E1ADCA89700C997A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6DD5F88F1ADCA89800C997A6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6DD5F8911ADCA89800C997A6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6DD5F8921ADCA89800C997A6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		6DD5F8951ADCA89800C997A6 /* Airport.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Airport.xcdatamodel; sourceTree = "<group>"; };
 		6DD5F8971ADCA89800C997A6 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		6DD5F8981ADCA89800C997A6 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		6DD5F89B1ADCA89800C997A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -53,10 +65,6 @@
 		6DD5F8B81ADCAC7A00C997A6 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		6DD5F8BB1ADCB25700C997A6 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = Classes/LoginViewController.h; sourceTree = "<group>"; };
 		6DD5F8BC1ADCB25700C997A6 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = Classes/LoginViewController.m; sourceTree = "<group>"; };
-		6DD5F8C01ADCB2D500C997A6 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = Model/User.h; sourceTree = "<group>"; };
-		6DD5F8C11ADCB2D500C997A6 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = Model/User.m; sourceTree = "<group>"; };
-		6DD5F8C31ADCB37F00C997A6 /* AirportAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AirportAPIClient.h; path = Model/AirportAPIClient.h; sourceTree = "<group>"; };
-		6DD5F8C41ADCB37F00C997A6 /* AirportAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AirportAPIClient.m; path = Model/AirportAPIClient.m; sourceTree = "<group>"; };
 		6DE653DD1ADD6F7C00B0CF2B /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfileViewController.h; path = Classes/ProfileViewController.h; sourceTree = "<group>"; };
 		6DE653DE1ADD6F7C00B0CF2B /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileViewController.m; path = Classes/ProfileViewController.m; sourceTree = "<group>"; };
 		A8BD958E97CABDF58647528E /* Pods-Airport.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Airport.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Airport/Pods-Airport.debug.xcconfig"; sourceTree = "<group>"; };
@@ -69,6 +77,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6DC812F51ADE16B8000AF071 /* CoreLocation.framework in Frameworks */,
+				6DC812F31ADE16B3000AF071 /* MapKit.framework in Frameworks */,
+				6D2FC0C91ADD7886009A5A24 /* QuartzCore.framework in Frameworks */,
+				6DC812F01ADE104B000AF071 /* TwitterKit.framework in Frameworks */,
 				6DD5F8B91ADCAC7A00C997A6 /* Crashlytics.framework in Frameworks */,
 				F43EEFA1ADE010F76789B2D9 /* libPods-Airport.a in Frameworks */,
 				6DD5F8BA1ADCAC7A00C997A6 /* Fabric.framework in Frameworks */,
@@ -162,11 +174,10 @@
 		6DD5F8BF1ADCB2A600C997A6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				6DD5F8941ADCA89800C997A6 /* Airport.xcdatamodeld */,
-				6DD5F8C01ADCB2D500C997A6 /* User.h */,
-				6DD5F8C11ADCB2D500C997A6 /* User.m */,
-				6DD5F8C31ADCB37F00C997A6 /* AirportAPIClient.h */,
-				6DD5F8C41ADCB37F00C997A6 /* AirportAPIClient.m */,
+				6DC812F61ADE1B4B000AF071 /* AirportKit.h */,
+				6DC812F71ADE1B4B000AF071 /* AirportKit.m */,
+				6DC812F91ADE1B63000AF071 /* Constants.h */,
+				6DC812FA1ADE1B63000AF071 /* Constants.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -174,6 +185,11 @@
 		9ACC26037B51A225949E82F5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6DC812F41ADE16B8000AF071 /* CoreLocation.framework */,
+				6DC812F21ADE16B3000AF071 /* MapKit.framework */,
+				6DC812EE1ADE104B000AF071 /* TwitterKit.framework */,
+				6DC812EF1ADE104B000AF071 /* TwitterKitResources.bundle */,
+				6D2FC0C81ADD7886009A5A24 /* QuartzCore.framework */,
 				6DD5F8B71ADCAC7A00C997A6 /* Crashlytics.framework */,
 				6DD5F8B81ADCAC7A00C997A6 /* Fabric.framework */,
 				BC8963520ED568CD07B0846B /* libPods-Airport.a */,
@@ -273,6 +289,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6DC812F11ADE104B000AF071 /* TwitterKitResources.bundle in Resources */,
 				6DD5F89C1ADCA89800C997A6 /* Main.storyboard in Resources */,
 				6DD5F8A11ADCA89800C997A6 /* LaunchScreen.xib in Resources */,
 				6DD5F89E1ADCA89800C997A6 /* Images.xcassets in Resources */,
@@ -342,10 +359,9 @@
 				6DD5F8931ADCA89800C997A6 /* AppDelegate.m in Sources */,
 				6DD5F8901ADCA89800C997A6 /* main.m in Sources */,
 				6DE653DF1ADD6F7C00B0CF2B /* ProfileViewController.m in Sources */,
-				6DD5F8C21ADCB2D500C997A6 /* User.m in Sources */,
 				6DD5F8991ADCA89800C997A6 /* ViewController.m in Sources */,
-				6DD5F8961ADCA89800C997A6 /* Airport.xcdatamodeld in Sources */,
-				6DD5F8C51ADCB37F00C997A6 /* AirportAPIClient.m in Sources */,
+				6DC812F81ADE1B4B000AF071 /* AirportKit.m in Sources */,
+				6DC812FB1ADE1B63000AF071 /* Constants.m in Sources */,
 				6DD5F8BD1ADCB25700C997A6 /* LoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -563,19 +579,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		6DD5F8941ADCA89800C997A6 /* Airport.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				6DD5F8951ADCA89800C997A6 /* Airport.xcdatamodel */,
-			);
-			currentVersion = 6DD5F8951ADCA89800C997A6 /* Airport.xcdatamodel */;
-			path = Airport.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 6DD5F8821ADCA89700C997A6 /* Project object */;
 }

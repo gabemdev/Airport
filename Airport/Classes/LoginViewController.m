@@ -7,12 +7,11 @@
 //
 
 #import "LoginViewController.h"
-#import <SimpleAuth/SimpleAuth.h>
-#import "User.h"
+#import <TwitterKit/TwitterKit.h>
+
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *singUpButton;
-@property (weak, nonatomic) IBOutlet UIButton *closeButton;
 
 @end
 
@@ -21,7 +20,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.singUpButton.layer.cornerRadius = 15;
+
+
     // Do any additional setup after loading the view.
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setHidden:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -31,22 +37,17 @@
 
 #pragma mark - Twitter SDK
 - (IBAction)onTwitterSignUp:(id)sender {
-    SimpleAuth.configuration[@"twitter"] = @{
-                                             @"consumer_key" : @"DAUtzCzGtSJLjYep5hJWn2uVl",
-                                             @"consumer_secret" : @"psvDan1X1W2cwAoREgwhav0UAt0lacNb9Z95UjxHudKUjJrX4W"
-                                             };
-    [SimpleAuth authorize:@"twitter" completion:^(id responseObject, NSError *error) {
-        NSLog(@"%@", responseObject);
-        if (error) {
-            UIAlertView *alertview = [[UIAlertView alloc]initWithTitle:@"Alert" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alertview performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:YES];
-
-        } else {
-            [self.navigationController popToRootViewControllerAnimated:YES];
-            [[User sharedInstance] loginWithDictionary:responseObject];
+    [[Twitter sharedInstance] logInWithCompletion:^(TWTRSession *session, NSError *error) {
+        if (session) {
+            [self navigateToMainAppScreen];
+        }else {
 
         }
     }];
+}
+
+- (void)navigateToMainAppScreen {
+    [self performSegueWithIdentifier:@"ShowMain" sender:self];
 }
 
 @end

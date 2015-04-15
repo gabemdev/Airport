@@ -7,10 +7,13 @@
 //
 
 #import "ViewController.h"
-#import "User.h"
+#import <MapKit/MapKit.h>
 
-@interface ViewController ()
+
+@interface ViewController ()<CLLocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *settingsButton;
+@property CLLocationManager *locationManager;
+@property CLLocation *userLocation;
 
 @end
 
@@ -18,34 +21,50 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self checkUser];
-    // Do any additional setup after loading the view, typically from a nib.
+
+    self.locationManager = [CLLocationManager new];
+    [self.locationManager requestWhenInUseAuthorization];
+    self.locationManager.delegate = self;
+    [self.locationManager startUpdatingLocation];
+    NSLog(@"Determining user location");
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setHidden:NO];
 }
 
 
-#pragma mark - User
-- (void)checkUser {
-    if ([[User sharedInstance] isLoggedIn]) {
-        NSLog(@"CPAppDelegate.application:didFinishLaunchingWithOptions: user is logged in");
+#pragma mark - CLLocationManagerDelegate
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    for (CLLocation *location in locations) {
+        if (location.horizontalAccuracy < 500 && location.verticalAccuracy < 500) {
+            self.userLocation = location;
+
+            [self.locationManager stopUpdatingHeading];
+            NSLog(@"Location found!");
+            break;
+        }
     }
-    else {
-        NSLog(@"AppDelegate User is not logged in");
-        [self performSegueWithIdentifier:@"showLogin" sender:self];
-    }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Unable to get your location"
+                                                                   message:@"Please make sure you have enabled location in your device settings"
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:cancel];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+
+- (void)loadNearbyAirports {
+    
 }
 
 #pragma mark - Actions
 - (IBAction)onSettingsButtonTapped:(id)sender {
 
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
 }
 
 @end
