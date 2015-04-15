@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import <SimpleAuth/SimpleAuth.h>
 #import <Fabric/Fabric.h>
 #import <TwitterKit/TwitterKit.h>
 #import <Crashlytics/Crashlytics.h>

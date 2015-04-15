@@ -11,15 +11,43 @@
 
 @implementation AirportKit
 
-+ (void)nearbyAirportsForLongitude:(float)longitude andLatitude:(float)latitude successCallback:(void (^)(id))successCallback errorCallback:(void (^)(NSString *))errorCallback {
-    NSString *longitudeString = [NSString stringWithFormat:@"%f", longitude];
-    NSString *latitudeString = [NSString stringWithFormat:@"%f", latitude];
-    NSString *requestString = [NSString stringWithFormat:@"%@%@/%@?%@=%@&%@=%@", AIRPORT_SERVICE_BASE_URL, latitudeString, longitudeString, USER_KEY_NAME, USER_KEY_VALUE, MAX_AIRPORTS_NAME, MAX_AIRPORTS_VALUE];
-    NSURL *url = [NSURL URLWithString:requestString];
++ (void)getNearbyAirportsWithLong:(float)longitude andLat:(float)latitude {
+    NSString *urlString = [NSString stringWithFormat:@"https://airport.api.aero/airport/nearest/41.875415/-87.624781?user_key=135135fe04927c7f832adf658d4b4b50"];
+    NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-
+        NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&connectionError];
+        NSLog(@"Response: %@", jsonDict);
     }];
+
+
+
+
 }
 
+
 @end
+
+
+/*
+callback(
+ {
+ "processingDurationMillis":53,
+ "authorisedAPI":true,
+ "success":true,
+ "airline":null,
+ "errorMessage":null,
+
+ "airports":[
+ {"code":"BUS",
+ "name":"Batumi",
+ "city":"Batumi",
+ "country":"Georgia",
+ "lat":41.610278,
+ "lng":41.599694,
+ "terminal":null,
+ "gate":null,
+ "timezone":
+ "Asia/Tbilisi"
+ },null]})
+*/

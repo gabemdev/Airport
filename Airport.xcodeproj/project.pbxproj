@@ -8,12 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		6D2FC0C91ADD7886009A5A24 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D2FC0C81ADD7886009A5A24 /* QuartzCore.framework */; };
+		6D89972C1ADECCA50030ABE5 /* AirportDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D89972B1ADECCA50030ABE5 /* AirportDetailViewController.m */; };
 		6DC812F01ADE104B000AF071 /* TwitterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DC812EE1ADE104B000AF071 /* TwitterKit.framework */; };
 		6DC812F11ADE104B000AF071 /* TwitterKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6DC812EF1ADE104B000AF071 /* TwitterKitResources.bundle */; };
 		6DC812F31ADE16B3000AF071 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DC812F21ADE16B3000AF071 /* MapKit.framework */; };
 		6DC812F51ADE16B8000AF071 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DC812F41ADE16B8000AF071 /* CoreLocation.framework */; };
 		6DC812F81ADE1B4B000AF071 /* AirportKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DC812F71ADE1B4B000AF071 /* AirportKit.m */; };
 		6DC812FB1ADE1B63000AF071 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DC812FA1ADE1B63000AF071 /* Constants.m */; };
+		6DC812FE1ADEB755000AF071 /* Airport.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DC812FD1ADEB755000AF071 /* Airport.m */; };
 		6DD5F8901ADCA89800C997A6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DD5F88F1ADCA89800C997A6 /* main.m */; };
 		6DD5F8931ADCA89800C997A6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DD5F8921ADCA89800C997A6 /* AppDelegate.m */; };
 		6DD5F8991ADCA89800C997A6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DD5F8981ADCA89800C997A6 /* ViewController.m */; };
@@ -40,6 +42,8 @@
 
 /* Begin PBXFileReference section */
 		6D2FC0C81ADD7886009A5A24 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		6D89972A1ADECCA50030ABE5 /* AirportDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AirportDetailViewController.h; path = Classes/AirportDetailViewController.h; sourceTree = "<group>"; };
+		6D89972B1ADECCA50030ABE5 /* AirportDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AirportDetailViewController.m; path = Classes/AirportDetailViewController.m; sourceTree = "<group>"; };
 		6DC812EE1ADE104B000AF071 /* TwitterKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TwitterKit.framework; sourceTree = "<group>"; };
 		6DC812EF1ADE104B000AF071 /* TwitterKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = TwitterKitResources.bundle; path = TwitterKit.framework/Versions/A/Resources/TwitterKitResources.bundle; sourceTree = "<group>"; };
 		6DC812F21ADE16B3000AF071 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -48,6 +52,8 @@
 		6DC812F71ADE1B4B000AF071 /* AirportKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AirportKit.m; path = Model/AirportKit.m; sourceTree = "<group>"; };
 		6DC812F91ADE1B63000AF071 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = Model/Constants.h; sourceTree = "<group>"; };
 		6DC812FA1ADE1B63000AF071 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Constants.m; path = Model/Constants.m; sourceTree = "<group>"; };
+		6DC812FC1ADEB755000AF071 /* Airport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Airport.h; path = Model/Airport.h; sourceTree = "<group>"; };
+		6DC812FD1ADEB755000AF071 /* Airport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Airport.m; path = Model/Airport.m; sourceTree = "<group>"; };
 		6DD5F88A1ADCA89700C997A6 /* Airport.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Airport.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DD5F88E1ADCA89700C997A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6DD5F88F1ADCA89800C997A6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -161,12 +167,14 @@
 			children = (
 				6DD5F8911ADCA89800C997A6 /* AppDelegate.h */,
 				6DD5F8921ADCA89800C997A6 /* AppDelegate.m */,
-				6DD5F8971ADCA89800C997A6 /* ViewController.h */,
-				6DD5F8981ADCA89800C997A6 /* ViewController.m */,
 				6DD5F8BB1ADCB25700C997A6 /* LoginViewController.h */,
 				6DD5F8BC1ADCB25700C997A6 /* LoginViewController.m */,
 				6DE653DD1ADD6F7C00B0CF2B /* ProfileViewController.h */,
 				6DE653DE1ADD6F7C00B0CF2B /* ProfileViewController.m */,
+				6DD5F8971ADCA89800C997A6 /* ViewController.h */,
+				6DD5F8981ADCA89800C997A6 /* ViewController.m */,
+				6D89972A1ADECCA50030ABE5 /* AirportDetailViewController.h */,
+				6D89972B1ADECCA50030ABE5 /* AirportDetailViewController.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -178,6 +186,8 @@
 				6DC812F71ADE1B4B000AF071 /* AirportKit.m */,
 				6DC812F91ADE1B63000AF071 /* Constants.h */,
 				6DC812FA1ADE1B63000AF071 /* Constants.m */,
+				6DC812FC1ADEB755000AF071 /* Airport.h */,
+				6DC812FD1ADEB755000AF071 /* Airport.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -360,7 +370,9 @@
 				6DD5F8901ADCA89800C997A6 /* main.m in Sources */,
 				6DE653DF1ADD6F7C00B0CF2B /* ProfileViewController.m in Sources */,
 				6DD5F8991ADCA89800C997A6 /* ViewController.m in Sources */,
+				6D89972C1ADECCA50030ABE5 /* AirportDetailViewController.m in Sources */,
 				6DC812F81ADE1B4B000AF071 /* AirportKit.m in Sources */,
+				6DC812FE1ADEB755000AF071 /* Airport.m in Sources */,
 				6DC812FB1ADE1B63000AF071 /* Constants.m in Sources */,
 				6DD5F8BD1ADCB25700C997A6 /* LoginViewController.m in Sources */,
 			);
@@ -495,6 +507,19 @@
 				);
 				INFOPLIST_FILE = Airport/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"Accounts\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"Social\"",
+					"-framework",
+					"\"UIKit\"",
+					"-Weverything",
+					"-Wno-objc-missing-property-synthesis",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -510,6 +535,19 @@
 				);
 				INFOPLIST_FILE = Airport/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"Accounts\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"Social\"",
+					"-framework",
+					"\"UIKit\"",
+					"-Weverything",
+					"-Wno-objc-missing-property-synthesis",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

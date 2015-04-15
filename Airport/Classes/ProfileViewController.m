@@ -49,7 +49,6 @@
             NSURL *url = [NSURL URLWithString:image];
             NSData *data = [NSData dataWithContentsOfURL:url];
             self.profileImage.image = [UIImage imageWithData:data];
-
             [self.navigationItem setTitle:[user name]];
         }
     }];
@@ -107,6 +106,9 @@
 }
 
 
+- (IBAction)onDismissButtonTapped:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 
 

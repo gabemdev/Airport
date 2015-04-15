@@ -10,7 +10,6 @@
 
 @interface AirportKit : NSObject
 
-+ (void)nearbyAirportsForLongitude:(float)longitude andLatitude:(float)latitude successCallback:(void (^)(id responseObject))successCallback errorCallback:(void (^)(NSString *error))errorCallback;
 
-
++ (void)getNearbyAirportsWithLong:(float)longitude andLat:(float)latitude;
 @end

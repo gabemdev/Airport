@@ -1,35 +1,10 @@
 PODS:
-  - CMDQueryStringSerialization (0.3.2):
-    - ISO8601
-  - cocoa-oauth (0.0.1):
-    - NSData+Base64 (~> 1.0)
-  - ISO8601 (0.1.3)
-  - NSData+Base64 (1.0.0)
-  - ReactiveCocoa (2.4.7):
-    - ReactiveCocoa/UI (= 2.4.7)
-  - ReactiveCocoa/Core (2.4.7):
-    - ReactiveCocoa/no-arc
-  - ReactiveCocoa/no-arc (2.4.7)
-  - ReactiveCocoa/UI (2.4.7):
-    - ReactiveCocoa/Core
-  - SimpleAuth/Core (0.3.7):
-    - CMDQueryStringSerialization
-    - ReactiveCocoa
-  - SimpleAuth/Twitter (0.3.7):
-    - cocoa-oauth
-    - SimpleAuth/UI
-  - SimpleAuth/UI (0.3.7):
-    - SimpleAuth/Core
+  - SSPullToRefresh (1.2.3)
 
 DEPENDENCIES:
-  - SimpleAuth/Twitter
+  - SSPullToRefresh
 
 SPEC CHECKSUMS:
-  CMDQueryStringSerialization: 03c5d9847a4eaa2b3e4e439ce1ae24f914cc7fe1
-  cocoa-oauth: 1200a2170276a62a975f2786d505dab6e2db1fa8
-  ISO8601: 8805b6cd6b2d0f7e594f7c5b50e8b00b51695ac0
-  NSData+Base64: 4e84902c4db907a15673474677e57763ef3903e4
-  ReactiveCocoa: eb38dee0a0e698f73a9b25e5c1faea2bb4c79240
-  SimpleAuth: 23cdf21db48f1aa342a84f82bd9c43eb5220344a
+  SSPullToRefresh: ae69778f6961120bd906e6349602c6918e609368
 
-COCOAPODS: 0.36.0
+COCOAPODS: 0.36.3

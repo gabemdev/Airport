@@ -38,10 +38,13 @@
 #pragma mark - Twitter SDK
 - (IBAction)onTwitterSignUp:(id)sender {
     [[Twitter sharedInstance] logInWithCompletion:^(TWTRSession *session, NSError *error) {
-        if (session) {
+        if (error) {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Alert" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
+            [alert addAction:cancel];
+            [self presentViewController:alert animated:YES completion:nil];
+        } else {
             [self navigateToMainAppScreen];
-        }else {
-
         }
     }];
 }
