@@ -7,6 +7,9 @@
 //
 
 #import "AirportDetailViewController.h"
+#import "SelectedDetailViewController.h"
+#import <MapKit/MapKit.h>
+#import "CustomTableViewCell.h"
 #import "AirportKit.h"
 #import "Airport.h"
 
@@ -21,11 +24,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSLog(@"Placemark: %f", self.selected.location.coordinate.latitude);
+    [self.navigationItem setTitle:[NSString stringWithFormat:@"Airport List"]];
     self.airportArray = [NSMutableArray new];
     CLLocation *selected = [[CLLocation alloc] initWithLatitude:self.selected.location.coordinate.latitude longitude:self.selected.location.coordinate.longitude];
     [self findAirportsNear: selected];
 
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.airportTableView reloadData];
 }
 
 #pragma mark - UITableViewDelegate
@@ -34,17 +42,21 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    CustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
     Airport *airport = self.airportArray[indexPath.row];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@", airport.mapItem.name];
+    cell.nameLabel.text = [NSString stringWithFormat:@"%@", airport.mapItem.name];
+    cell.addressLabel.text = [NSString stringWithFormat:@"%@", airport.locationAddress];
+    cell.millesLabel.text = [NSString stringWithFormat:@"%.2f MI", airport.locationDistance];
     return cell;
 }
 
+#pragma mark - Helper Methods
 
 - (void)findAirportsNear:(CLLocation *)location {
     MKLocalSearchRequest *request = [MKLocalSearchRequest new];
     request.naturalLanguageQuery = @"Airport";
-    request.region = MKCoordinateRegionMake(location.coordinate, MKCoordinateSpanMake(0.05, 0.05));
+    request.region = MKCoordinateRegionMake(location.coordinate, MKCoordinateSpanMake(.09, .09));
 
     MKLocalSearch *search = [[MKLocalSearch alloc] initWithRequest:request];
     [search startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error) {
@@ -52,8 +64,9 @@
         for (MKMapItem *item in airports) {
             self.mainAirport = [Airport new];
             self.mainAirport.mapItem = item;
-            NSString *address = [NSString stringWithFormat:@"%@ %@ %@", item.placemark.subThoroughfare, item.placemark.thoroughfare, item.placemark.locality];
+            NSString *address = [NSString stringWithFormat:@"%@ %@ %@,%@ %@",item.placemark.subThoroughfare, item.placemark.thoroughfare, item.placemark.locality, item.placemark.administrativeArea, item.placemark.postalCode];
             NSString *name = [NSString stringWithFormat:@"%@", item.placemark.name];
+            self.mainAirport.areasOfInterest = item.placemark.areasOfInterest;
             self.mainAirport.locationName = name;
             self.mainAirport.locationAddress = address;
             self.mainAirport.locationDistance = [self.mainAirport.mapItem.placemark.location distanceFromLocation:location]/1000;
@@ -67,6 +80,18 @@
         [self.airportTableView reloadData];
     }];
 }
+
+
+#pragma mark - Actions
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(UITableViewCell *)sender {
+    SelectedDetailViewController *vc = segue.destinationViewController;
+    vc.airport = self.airportArray[[[self.airportTableView indexPathForCell:sender] row]];
+}
+
+
+
+
 
 
 @end

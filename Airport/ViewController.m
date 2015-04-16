@@ -27,6 +27,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.navigationItem setTitle:[NSString stringWithFormat:@"Airport"]];
     [self setupUI];
     [self initLocation];
 
@@ -87,7 +88,7 @@
             self.mainLabel.text = [NSString stringWithFormat:@"Horray!, Your zipcode is:"];
             self.zipTextField.text = [NSString stringWithFormat:@"%@", self.placemark.postalCode];
             self.showButton.hidden = NO;
-            NSLog(@"User lat: %f & user long: %f", location.coordinate.latitude, location.coordinate.longitude);
+//            NSLog(@"User lat: %f & user long: %f", location.coordinate.latitude, location.coordinate.longitude);
         }
     }];
 }

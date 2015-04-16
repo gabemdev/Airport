@@ -12,7 +12,10 @@
 #import <Crashlytics/Crashlytics.h>
 #import "LoginViewController.h"
 
+static NSString *kAPIKey = @"";
+static NSString *kAPISecret = @"";
 
+static NSString *kFloorplanId = @"";
 @interface AppDelegate ()
 
 @end

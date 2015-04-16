@@ -15,6 +15,7 @@
 @property MKMapItem *mapItem;
 @property NSString *locationAddress;
 @property NSString *locationName;
+@property NSArray *areasOfInterest;
 @property MKRoute *routeDetails;
 @property MKPlacemark *placemark;
 @property NSString *rating;

@@ -50,6 +50,8 @@
             NSData *data = [NSData dataWithContentsOfURL:url];
             self.profileImage.image = [UIImage imageWithData:data];
             [self.navigationItem setTitle:[user name]];
+            self.profileName.text = user.name;
+            self.bioLabel.text = user.description;
         }
     }];
 }
@@ -68,8 +70,6 @@
                 [[[Twitter sharedInstance] APIClient] sendTwitterRequest:request completion:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
                     if (data) {
                         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&connectionError];
-                        NSLog(@"Data: %@", json);
-
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                             NSString *image = [NSString stringWithFormat:@"%@", [json objectForKey:@"profile_image_url"]];
                             image = [image stringByReplacingOccurrencesOfString:@"_normal" withString:@"_reasonably_small"];
@@ -86,6 +86,11 @@
                             });
                             
                         });
+                    } else {
+                        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error!" message:connectionError.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+                        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
+                        [alert addAction:cancel];
+                        [self presentViewController:alert animated:YES completion:nil];
                     }
                 }];
             }
