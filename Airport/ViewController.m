@@ -85,7 +85,7 @@
             NSLog(@"Error: %@", error.localizedDescription);
         } else {
             self.placemark = placemarks.firstObject;
-            self.mainLabel.text = [NSString stringWithFormat:@"Horray!, Your zipcode is:"];
+            self.mainLabel.text = [NSString stringWithFormat:@"Hooray!, Your zipcode is:"];
             self.zipTextField.text = [NSString stringWithFormat:@"%@", self.placemark.postalCode];
             self.showButton.hidden = NO;
 //            NSLog(@"User lat: %f & user long: %f", location.coordinate.latitude, location.coordinate.longitude);
