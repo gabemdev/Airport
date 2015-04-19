@@ -94,10 +94,6 @@
 }
 
 
-- (void)loadNearbyAirports {
-    
-}
-
 #pragma mark - Actions
 
 - (void)searchZip:(id)sender {

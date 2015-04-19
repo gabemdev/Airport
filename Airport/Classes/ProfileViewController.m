@@ -15,6 +15,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *profileName;
 @property (weak, nonatomic) IBOutlet UIButton *logoutButton;
 @property (weak, nonatomic) IBOutlet UILabel *bioLabel;
+@property (weak, nonatomic) IBOutlet UILabel *followerLabel;
+@property (weak, nonatomic) IBOutlet UILabel *followingLabel;
 
 @end
 
@@ -71,21 +73,37 @@
                     if (data) {
                         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&connectionError];
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                            // Profile Image
                             NSString *image = [NSString stringWithFormat:@"%@", [json objectForKey:@"profile_image_url"]];
                             image = [image stringByReplacingOccurrencesOfString:@"_normal" withString:@"_reasonably_small"];
                             NSURL *url = [NSURL URLWithString:image];
                             NSData *data = [NSData dataWithContentsOfURL:url];
 
+                            // Profile Info
                             NSString *name = [NSString stringWithFormat:@"%@", json[@"name"]];
                             NSString *bio = [NSString stringWithFormat:@"%@", json[@"description"]];
+
+                            //Profile links
+                            NSDictionary *urls = json[@"entities"][@"url"];
+                            NSArray *urlArray = urls[@"urls"];
+                            NSString *expanded_url = [NSString stringWithFormat:@"%@", urlArray[0][@"expanded_url"]];
+
+                            //Follower info
+                            NSString *followingCount = [NSString stringWithFormat:@"%@", json[@"friends_count"]];
+                            NSString *followerCount = [NSString stringWithFormat:@"%@", json[@"followers_count"]];
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 self.profileImage.image = [UIImage imageWithData:data];
                                 self.profileName.text = name;
                                 self.bioLabel.text = bio;
+                                self.followingLabel.text = followingCount;
+                                self.followerLabel.text = followerCount;
+                                 NSLog(@"%@", expanded_url);
+                
                                 [self saveUserName:name withBio:bio andImage:image];
                             });
                             
                         });
+
                     } else {
                         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error!" message:connectionError.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
                         UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
@@ -107,7 +125,6 @@
     [defaults setObject:bio forKey:@"bio"];
     [defaults setObject:imageUrl forKey:@"image"];
     [defaults synchronize];
-    NSLog(@"Data saved: %@", defaults);
 }
 
 

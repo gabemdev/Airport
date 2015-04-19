@@ -72,7 +72,7 @@
     }
     MKPinAnnotationView *pin = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:nil];
     pin.canShowCallout = YES;
-    pin.image = [UIImage imageNamed:@"FindARide_MapUI_Pin_EndPin"];
+    pin.image = [UIImage imageNamed:@"start_2"];
     pin.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
     pin.rightCalloutAccessoryView.tintColor = [UIColor colorWithRed:0.10 green:0.53 blue:0.76 alpha:1.0];
     newAnnotation.title = annotation.title;

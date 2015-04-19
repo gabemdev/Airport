@@ -2,17 +2,18 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x"
+      "scale" : "1x",
+      "filename" : "pin icon 5.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "menu.png"
+      "filename" : "pin icon 5@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "menu@2x.png"
+      "filename" : "pin icon 5@3x.png"
     }
   ],
   "info" : {

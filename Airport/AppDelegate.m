@@ -34,8 +34,6 @@ static NSString *kFloorplanId = @"";
         UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         LoginViewController *vc = [sb instantiateViewControllerWithIdentifier:@"LoginViewController"];
         self.window.rootViewController = vc;
-    } else {
-        NSLog(@"Session: %@", [[Twitter sharedInstance] session]);
     }
 
     //Register for Remote Notifications

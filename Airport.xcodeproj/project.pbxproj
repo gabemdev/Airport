@@ -59,7 +59,6 @@
 		6D8997341ADF5D110030ABE5 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		6D8997361ADF5D1D0030ABE5 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		6D8997381ADF5D270030ABE5 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
-		6D89973A1ADF5D3B0030ABE5 /* IndoorAtlas.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IndoorAtlas.framework; path = "../../../Downloads/indooratlas-ios-sdk-1.4.1-beta-340/IndoorAtlas.framework"; sourceTree = "<group>"; };
 		6DC812EE1ADE104B000AF071 /* TwitterKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TwitterKit.framework; sourceTree = "<group>"; };
 		6DC812EF1ADE104B000AF071 /* TwitterKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = TwitterKitResources.bundle; path = TwitterKit.framework/Versions/A/Resources/TwitterKitResources.bundle; sourceTree = "<group>"; };
 		6DC812F21ADE16B3000AF071 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -228,7 +227,6 @@
 		9ACC26037B51A225949E82F5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6D89973A1ADF5D3B0030ABE5 /* IndoorAtlas.framework */,
 				6D8997381ADF5D270030ABE5 /* libicucore.dylib */,
 				6D8997361ADF5D1D0030ABE5 /* libz.dylib */,
 				6D8997341ADF5D110030ABE5 /* CoreMotion.framework */,
