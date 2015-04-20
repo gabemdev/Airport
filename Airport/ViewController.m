@@ -27,6 +27,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"arches"]]];
     [self.navigationItem setTitle:[NSString stringWithFormat:@"Airport"]];
     [self setupUI];
     [self initLocation];
@@ -88,7 +89,6 @@
             self.mainLabel.text = [NSString stringWithFormat:@"Hooray!, Your zipcode is:"];
             self.zipTextField.text = [NSString stringWithFormat:@"%@", self.placemark.postalCode];
             self.showButton.hidden = NO;
-//            NSLog(@"User lat: %f & user long: %f", location.coordinate.latitude, location.coordinate.longitude);
         }
     }];
 }

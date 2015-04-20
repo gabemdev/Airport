@@ -14,7 +14,12 @@
 @property CLLocationDistance locationDistance;
 @property MKMapItem *mapItem;
 @property NSString *locationAddress;
+@property NSString *locationCity;
+@property NSString *locationState;
+@property NSString *locationZip;
 @property NSString *locationName;
+@property NSString *locationPhoneNumber;
+@property NSString *locationURL;
 @property NSArray *areasOfInterest;
 @property MKRoute *routeDetails;
 @property MKPlacemark *placemark;

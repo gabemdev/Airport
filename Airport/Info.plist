@@ -61,6 +61,9 @@
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
+		<string>gps</string>
+		<string>magnetometer</string>
+		<string>bluetooth-le</string>
 		<string>armv7</string>
 	</array>
 	<key>UIStatusBarStyle</key>

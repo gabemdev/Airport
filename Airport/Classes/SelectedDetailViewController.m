@@ -8,13 +8,18 @@
 
 #import "SelectedDetailViewController.h"
 #import <MapKit/MapKit.h>
+#import "BeaconViewController.h"
 
 @interface SelectedDetailViewController ()<MKMapViewDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
+@property (weak, nonatomic) IBOutlet UILabel *phoneNumberLabel;
+@property (weak, nonatomic) IBOutlet UILabel *urlLabel;
 @property (weak, nonatomic) IBOutlet UILabel *distanceLabel;
 @property (weak, nonatomic) IBOutlet UIButton *showMapButton;
+@property (weak, nonatomic) IBOutlet UIImageView *distanceBackground;
+@property (weak, nonatomic) IBOutlet UIView *contentView;
 @property CLLocationManager *locationManager;
 @property MKRoute *destinationRoute;
 @property MKPointAnnotation *airportAnnotation;
@@ -25,6 +30,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.distanceBackground.backgroundColor = [UIColor whiteColor];
+    [self.contentView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"arches"]]];
     [self loadAirportInfo];
 
     self.mapView.delegate = self;
@@ -97,13 +104,31 @@
 - (void)loadAirportInfo {
     self.nameLabel.text = self.airport.locationName;
     self.addressLabel.text = self.airport.locationAddress;
+    self.urlLabel.text = self.airport.locationURL;
     self.distanceLabel.text = [NSString stringWithFormat:@"%.2f MI", self.airport.locationDistance];
     self.showMapButton.layer.cornerRadius = 15;
+
+    NSMutableString *stringts = [NSMutableString stringWithString:self.airport.locationPhoneNumber];
+    [stringts insertString:@" (" atIndex:2];
+    [stringts insertString:@") " atIndex:7];
+    [stringts insertString:@"-" atIndex:12];
+
+    self.phoneNumberLabel.text = stringts;
 }
 
 #pragma mark - Actions
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    BeaconViewController *vc = segue.destinationViewController;
+    vc.selected = self.airport;
+}
 
+- (IBAction)onShareButtonTapped:(id)sender {
+    NSURL *url = [NSURL URLWithString:self.airport.locationURL];
+    NSString *shareString = [NSString stringWithFormat:@"I'm at %@", self.airport.locationName];
+    NSArray *shareItems = @[shareString, url];
+    UIActivityViewController *share = [[UIActivityViewController alloc] initWithActivityItems:shareItems applicationActivities:nil];
+    share.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypeAddToReadingList, UIActivityTypePostToTencentWeibo, UIActivityTypePrint, UIActivityTypePostToWeibo, UIActivityTypePostToVimeo, UIActivityTypePrint];
+    [self presentViewController:share animated:YES completion:nil];
 }
 
 @end
