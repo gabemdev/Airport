@@ -24,6 +24,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"arches"]]];
     [self.navigationItem setTitle:[NSString stringWithFormat:@"Airport List"]];
     self.airportArray = [NSMutableArray new];
     CLLocation *selected = [[CLLocation alloc] initWithLatitude:self.selected.location.coordinate.latitude longitude:self.selected.location.coordinate.longitude];
@@ -60,18 +61,27 @@
 
     MKLocalSearch *search = [[MKLocalSearch alloc] initWithRequest:request];
     [search startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error) {
-        NSArray *airports = response.mapItems;
-        for (MKMapItem *item in airports) {
-            self.mainAirport = [Airport new];
-            self.mainAirport.mapItem = item;
-            NSString *address = [NSString stringWithFormat:@"%@ %@ %@,%@ %@",item.placemark.subThoroughfare, item.placemark.thoroughfare, item.placemark.locality, item.placemark.administrativeArea, item.placemark.postalCode];
-            NSString *name = [NSString stringWithFormat:@"%@", item.placemark.name];
-            self.mainAirport.areasOfInterest = item.placemark.areasOfInterest;
-            self.mainAirport.locationName = name;
-            self.mainAirport.locationAddress = address;
-            self.mainAirport.locationDistance = [self.mainAirport.mapItem.placemark.location distanceFromLocation:location]/1000;
-            self.mainAirport.placemark = item.placemark;
-            [self.airportArray addObject:self.mainAirport];
+        if (error) {
+            NSLog(@"Error: %@", error.localizedDescription);
+        } else {
+            NSArray *airports = response.mapItems;
+            for (MKMapItem *item in airports) {
+                self.mainAirport = [Airport new];
+                self.mainAirport.mapItem = item;
+                NSString *address = [NSString stringWithFormat:@"%@ %@ %@,%@ %@",item.placemark.subThoroughfare, item.placemark.thoroughfare, item.placemark.locality, item.placemark.administrativeArea, item.placemark.postalCode];
+                NSString *name = [NSString stringWithFormat:@"%@", item.placemark.name];
+                self.mainAirport.areasOfInterest = item.placemark.areasOfInterest;
+                self.mainAirport.locationName = name;
+                self.mainAirport.locationAddress = address;
+                self.mainAirport.locationCity = item.placemark.locality;
+                self.mainAirport.locationState = item.placemark.administrativeArea;
+                self.mainAirport.locationZip = item.placemark.postalCode;
+                self.mainAirport.locationURL = [NSString stringWithFormat:@"%@", item.url];
+                self.mainAirport.locationPhoneNumber = item.phoneNumber;
+                self.mainAirport.locationDistance = [self.mainAirport.mapItem.placemark.location distanceFromLocation:location]/1000;
+                self.mainAirport.placemark = item.placemark;
+                [self.airportArray addObject:self.mainAirport];
+            }
         }
 
         NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"locationDistance" ascending:YES];
@@ -79,6 +89,7 @@
         self.airportArray = [NSMutableArray arrayWithArray:sorted];
         [self.airportTableView reloadData];
     }];
+
 }
 
 

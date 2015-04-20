@@ -7,119 +7,173 @@
 //
 
 #import "BeaconViewController.h"
+#import "Beacons.h"
 @import CoreLocation;
 @import CoreBluetooth;
 
 @interface BeaconViewController ()<CLLocationManagerDelegate>
-//@property (strong, nonatomic) CLBeaconRegion *kitchen;
-//@property (strong, nonatomic) CLBeaconRegion *room1;
+
+@property (strong, nonatomic) CLBeaconRegion *kitchen;
+@property (strong, nonatomic) CLBeaconRegion *room1;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 
+@property (weak, nonatomic) IBOutlet UILabel *accuracyLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *indoorMap;
 @property (weak, nonatomic) IBOutlet UILabel *uuidLabel;
-@property (weak, nonatomic) IBOutlet UILabel *majorLabel;
-@property (weak, nonatomic) IBOutlet UILabel *minorLabel;
 @property (weak, nonatomic) IBOutlet UILabel *proximityLabel;
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
-@property (weak, nonatomic) IBOutlet UILabel *rssiLabel;
-@property (weak, nonatomic) IBOutlet UILabel *accuracyLabel;
+@property (weak, nonatomic) IBOutlet UILabel *headingLabel;
+@property NSString *location;
 
 @end
 
 @implementation BeaconViewController
-NSUUID *kitchenuuid;
-NSUUID *room1uuid;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [self initRegions];
-}
-
-- (void)initRegions {
-
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"arches"]]];
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
+    self.locationManager.distanceFilter = 1000;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyKilometer;
 
-    kitchenuuid = [[NSUUID alloc] initWithUUIDString:@"EBEFD083-70A2-47C8-9837-E7B5634DF600"];
-    room1uuid = [[NSUUID alloc] initWithUUIDString:@"5A4BCFCE-174E-4BAC-A814-092E77F6B7E5"];
-
-    CLBeaconRegion *kitchen = [[CLBeaconRegion alloc] initWithProximityUUID:kitchenuuid identifier:@"Kitchen"];
-    kitchen.notifyOnEntry = YES;
-    kitchen.notifyOnExit = YES;
-    kitchen.notifyEntryStateOnDisplay = YES;
-
-    if ([CLLocationManager isMonitoringAvailableForClass:[CLBeaconRegion class]]) {
-        [self.locationManager startRangingBeaconsInRegion:kitchen];
-        [self.locationManager startMonitoringForRegion:kitchen];
+    if ([CLLocationManager headingAvailable]) {
+        self.locationManager.headingFilter = 5;
+        [self.locationManager startUpdatingHeading];
     }
 
-    CLBeaconRegion *room1 = [[CLBeaconRegion alloc] initWithProximityUUID:room1uuid identifier:@"Room 1"];
-    room1.notifyOnEntry = YES;
-    room1.notifyOnExit = YES;
-    room1.notifyEntryStateOnDisplay = YES;
-
-    if ([CLLocationManager isMonitoringAvailableForClass:[CLBeaconRegion class]]) {
-        [self.locationManager startMonitoringForRegion:room1];
-        [self.locationManager startRangingBeaconsInRegion:room1];
-    }
-
-
+    [self initRegion];
 }
 
+#pragma mark - CLLocationManagerDelegate
+/**
+ *  Load beacon Regions. Set Identifiers per beacon UUID;
+ */
+- (void)initRegion {
+    NSUUID *kitchenuuid = [Beacons sharedBeacons].kitckenUUID;
+    NSUUID *room1uuid = [Beacons sharedBeacons].room1UUID;
+
+    self.kitchen = [[CLBeaconRegion alloc] initWithProximityUUID:kitchenuuid identifier:@"Kitchen"];
+    self.kitchen.notifyOnEntry = YES;
+    self.kitchen.notifyOnExit = YES;
+    self.kitchen.notifyEntryStateOnDisplay = YES;
+    [self.locationManager startRangingBeaconsInRegion:self.kitchen];
+    [self.locationManager startMonitoringForRegion:self.kitchen];
+
+    self.room1 = [[CLBeaconRegion alloc] initWithProximityUUID:room1uuid identifier:@"Room 1"];
+    self.room1.notifyOnEntry = YES;
+    self.room1.notifyOnExit = YES;
+    self.room1.notifyEntryStateOnDisplay = YES;
+    [self.locationManager startRangingBeaconsInRegion:self.room1];
+    [self.locationManager startMonitoringForRegion:self.room1];
+
+    [self.locationManager startUpdatingLocation];
+}
+
+/**
+ *  Enter Region. If region matches uuid, display title accordingly.
+ *
+ */
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
-    if ([region isKindOfClass:[CLBeaconRegion class]]) {
-        CLBeaconRegion *beaconRegion = (CLBeaconRegion *)region;
-        if ([beaconRegion.proximityUUID isEqual:kitchenuuid]) {
-            self.title = @"Kitchen";
-        } else if ([beaconRegion.proximityUUID isEqual:room1uuid]) {
-            self.title = @"Room 1";
+    [manager startRangingBeaconsInRegion:(CLBeaconRegion*)region];
+
+    CLBeaconRegion *beaconRegion = (CLBeaconRegion *)region;
+        if ([beaconRegion.proximityUUID isEqual:[Beacons sharedBeacons].kitckenUUID]) {
+            self.locationLabel.text = @"Kitchen";
+        } else if ([beaconRegion.proximityUUID isEqual:[Beacons sharedBeacons].room1UUID]) {
+            self.locationLabel.text = @"Room 1";
         }
-    }
 }
 
+
+/**
+ *  Exit Region. Stop Ranging and Stop updating location
+ *
+ */
 -(void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
-    if ([region isKindOfClass:[CLBeaconRegion class]]) {
-        CLBeaconRegion *beaconRegion = (CLBeaconRegion *)region;
-        if ([beaconRegion.proximityUUID isEqual:kitchenuuid]) {
-            NSLog(@"Left Kitchen");
-        } else if ([beaconRegion.proximityUUID isEqual:room1uuid]) {
-            NSLog(@"Room 1 left");
-        }
-    }
+    [manager stopRangingBeaconsInRegion:(CLBeaconRegion*)region];
+    [self.locationManager stopUpdatingLocation];
 }
 
+/**
+ *  Beacon Found. Obtain beacon info and display it.
+ *
+ */
 -(void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region {
-    if ([region isKindOfClass:[CLBeaconRegion class]]) {
-        for (CLBeacon *beacon in beacons) {
-            NSString *beaconID = [beacons objectAtIndex:0];
-            NSLog(@"UUID: %@", beacon.proximityUUID.UUIDString);
-
-            if ([region.proximityUUID isEqual:kitchenuuid]) {
-                if (beacon.accuracy >=0.000001 && beacon.accuracy <= 0.500000) {
-                    self.locationLabel.text = @"Kitcken";
-                }
-            } else if ([region.proximityUUID isEqual:room1uuid]) {
-                if (beacon.accuracy >=0.000001 && beacon.accuracy <= 0.500000) {
-                    self.locationLabel.text = @"Room 1";
-                }
+    for (CLBeacon *beacon in beacons) {
+        if ([region.proximityUUID isEqual:[Beacons sharedBeacons].kitckenUUID]) {
+            if (beacon.accuracy >=0.000001 && beacon.accuracy <= 0.500000) {
+                self.indoorMap.image = [UIImage imageNamed:@"bottomFloor"];
             }
-            self.uuidLabel.text = beacon.proximityUUID.UUIDString;
-            self.majorLabel.text = [NSString stringWithFormat:@"%@", beacon.major];
-            self.minorLabel.text = [NSString stringWithFormat:@"%@", beacon.minor];
-            self.accuracyLabel.text = [NSString stringWithFormat:@"%f", beacon.accuracy];
-            if (beacon.proximity == CLProximityUnknown) {
-                self.proximityLabel.text = @"Unknown Proximity";
-            } else if (beacon.proximity == CLProximityImmediate) {
-                self.proximityLabel.text = @"Immediate";
-            } else if (beacon.proximity == CLProximityNear) {
-                self.proximityLabel.text = @"Near";
-            } else if (beacon.proximity == CLProximityFar) {
-                self.proximityLabel.text = @"Far";
+        } else if ([region.proximityUUID isEqual:[Beacons sharedBeacons].room1UUID]) {
+            if (beacon.accuracy >=0.000001 && beacon.accuracy <= 0.500000) {
+                self.indoorMap.image = [UIImage imageNamed:@"topFloor"];
             }
-            self.rssiLabel.text = [NSString stringWithFormat:@"%li", (long)beacon.rssi];
         }
+        self.uuidLabel.text = beacon.proximityUUID.UUIDString;
+        self.locationLabel.text = region.identifier;
+        self.accuracyLabel.text = [NSString stringWithFormat:@"Accuracy: %.2f", beacon.accuracy];
+        if (beacon.proximity == CLProximityUnknown) {
+            self.location = @"are lost.. you are going to";
+        } else if (beacon.proximity == CLProximityImmediate) {
+            self.location = @"have arrived at";
+        } else if (beacon.proximity == CLProximityNear) {
+            self.location = @"are a few steps from";
+        } else if (beacon.proximity == CLProximityFar) {
+            self.location = @"are still far from";
+        }
+        self.locationLabel.text = [NSString stringWithFormat:@"You %@ %@", self.location, region.identifier];
     }
 }
 
+#pragma mark - Heading
+/**
+ *  Get heading.
+ *
+ */
+- (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading {
+    if (newHeading.headingAccuracy < 0)
+        return;
+
+    // Use the true heading if it is valid.
+    CLLocationDirection  theHeading = ((newHeading.trueHeading > 0) ?
+                                       newHeading.trueHeading : newHeading.magneticHeading);
+
+    float mHeading = theHeading;
+    NSString *heading;
+
+    if ((mHeading >= 339) || (mHeading <= 22)) {
+
+        heading = @"North";
+    }
+    else if ((mHeading > 23) && (mHeading <= 68)) {
+        heading = @"North Eeast";
+    }
+    else if ((mHeading > 69) && (mHeading <= 113)) {
+        heading = @"East";
+    }
+    else if ((mHeading > 114) && (mHeading <= 158)) {
+        heading = @"South East";
+    }
+    else if ((mHeading > 159) && (mHeading <= 203)) {
+        heading = @"South";
+    }
+    else if ((mHeading > 204) && (mHeading <= 248)) {
+        heading = @"South West";
+    }
+    else if ((mHeading > 249) && (mHeading <= 293)) {
+        heading = @"West";
+    }
+    else if ((mHeading > 294) && (mHeading <= 338)) {
+        heading = @"North West";
+    }
+
+    self.headingLabel.text = [NSString stringWithFormat:@"%@", heading];
+}
+
+- (BOOL)locationManagerShouldDisplayHeadingCalibration:(CLLocationManager *)manager {
+    return YES;
+}
 
 @end

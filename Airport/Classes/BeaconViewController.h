@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Airport.h"
 
 @interface BeaconViewController : UIViewController
+
+@property Airport *selected;
 
 @end

@@ -24,6 +24,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"arches"]]];
     self.profileImage.layer.cornerRadius = self.profileImage.frame.size.width / 2;
     self.profileImage.layer.masksToBounds = YES;
     self.logoutButton.layer.cornerRadius = 15;
@@ -74,7 +75,7 @@
                         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&connectionError];
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                             // Profile Image
-                            NSString *image = [NSString stringWithFormat:@"%@", [json objectForKey:@"profile_image_url"]];
+                            NSString *image = [NSString stringWithFormat:@"%@", json[@"profile_image_url"]];
                             image = [image stringByReplacingOccurrencesOfString:@"_normal" withString:@"_reasonably_small"];
                             NSURL *url = [NSURL URLWithString:image];
                             NSData *data = [NSData dataWithContentsOfURL:url];
