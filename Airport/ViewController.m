@@ -83,7 +83,11 @@
     CLGeocoder *geoCoder = [CLGeocoder new];
     [geoCoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
         if (error) {
-            NSLog(@"Error: %@", error.localizedDescription);
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Alert" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
+            [alert addAction:cancel];
+
+            [self presentViewController:alert animated:YES completion:nil];
         } else {
             self.placemark = placemarks.firstObject;
             self.mainLabel.text = [NSString stringWithFormat:@"Hooray!, Your zipcode is:"];

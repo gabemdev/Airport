@@ -104,16 +104,24 @@
 - (void)loadAirportInfo {
     self.nameLabel.text = self.airport.locationName;
     self.addressLabel.text = self.airport.locationAddress;
-    self.urlLabel.text = self.airport.locationURL;
     self.distanceLabel.text = [NSString stringWithFormat:@"%.2f MI", self.airport.locationDistance];
     self.showMapButton.layer.cornerRadius = 15;
 
+    if (self.airport.locationPhoneNumber == nil) {
+        self.airport.locationPhoneNumber = @"+11234567890";
+    }
     NSMutableString *stringts = [NSMutableString stringWithString:self.airport.locationPhoneNumber];
     [stringts insertString:@" (" atIndex:2];
     [stringts insertString:@") " atIndex:7];
     [stringts insertString:@"-" atIndex:12];
 
     self.phoneNumberLabel.text = stringts;
+
+    if ([self.airport.locationURL isEqualToString:@"(null)"]) {
+        self.airport.locationURL = @"No URL at this time";
+    }
+
+    self.urlLabel.text = self.airport.locationURL;
 }
 
 #pragma mark - Actions

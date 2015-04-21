@@ -55,6 +55,12 @@
             [self.navigationItem setTitle:[user name]];
             self.profileName.text = user.name;
             self.bioLabel.text = user.description;
+        } else {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Alert" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
+            [alert addAction:cancel];
+
+            [self presentViewController:alert animated:YES completion:nil];
         }
     }];
 }

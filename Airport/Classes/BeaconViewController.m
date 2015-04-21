@@ -46,6 +46,12 @@
     [self initRegion];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.locationManager startRangingBeaconsInRegion:self.kitchen];
+    [self.locationManager startRangingBeaconsInRegion:self.room1];
+}
+
 #pragma mark - CLLocationManagerDelegate
 /**
  *  Load beacon Regions. Set Identifiers per beacon UUID;
@@ -125,6 +131,33 @@
         }
         self.locationLabel.text = [NSString stringWithFormat:@"You %@ %@", self.location, region.identifier];
     }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didDetermineState:(CLRegionState)state forRegion:(CLRegion *)region
+{
+    /*
+     A user can transition in or out of a region while the application is not running. When this happens CoreLocation will launch the application momentarily, call this delegate method and we will let the user know via a local notification.
+     */
+    UILocalNotification *notification = [[UILocalNotification alloc] init];
+
+    if(state == CLRegionStateInside)
+    {
+        notification.alertBody = NSLocalizedString(@"You're inside the region", @"");
+    }
+    else if(state == CLRegionStateOutside)
+    {
+        notification.alertBody = NSLocalizedString(@"You're outside the region", @"");
+    }
+    else
+    {
+        return;
+    }
+
+    /*
+     If the application is in the foreground, it will get a callback to application:didReceiveLocalNotification:.
+     If it's not, iOS will display the notification to the user.
+     */
+    [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
 }
 
 #pragma mark - Heading

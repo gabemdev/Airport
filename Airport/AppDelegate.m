@@ -75,14 +75,20 @@ static NSString *kFloorplanId = @"";
     [application registerForRemoteNotifications];
 }
 
-- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString   *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler
-{
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString   *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler {
     //handle the actions
     if ([identifier isEqualToString:@"declineAction"]){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops!" message:@"If you want to receive notifications from Airport in the future, you can always go to Settings -> Notifications -> Airport and Allow notifications" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
     }
     else if ([identifier isEqualToString:@"answerAction"]){
 
     }
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:notification.alertBody message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
 }
 
 @end
