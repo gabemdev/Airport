@@ -12,6 +12,9 @@
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *singUpButton;
+@property (weak, nonatomic) IBOutlet UIImageView *logoImageView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *logoTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *buttonBottomConstraint;
 
 @end
 
@@ -19,14 +22,23 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.singUpButton.layer.cornerRadius = 15;
+    [self setNeedsStatusBarAppearanceUpdate];
+    [self.view layoutIfNeeded];
 
-
-    // Do any additional setup after loading the view.
+    [UIView animateWithDuration:1.5 animations:^{
+        if (self.logoTopConstraint.constant == 150) {
+            self.singUpButton.alpha = 1;
+            self.logoImageView.alpha = 1;
+            self.logoTopConstraint.constant = -193;
+            self.buttonBottomConstraint.constant = -152;
+        }
+        [self.view layoutIfNeeded];
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.singUpButton.layer.cornerRadius = 15;
     [self.navigationController.navigationBar setHidden:YES];
 }
 
@@ -51,6 +63,10 @@
 
 - (void)navigateToMainAppScreen {
     [self performSegueWithIdentifier:@"ShowMain" sender:self];
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 
 @end

@@ -13,8 +13,16 @@
 
 @property (nonatomic) NSString *name;
 @property (nonatomic) NSString *username;
+@property (nonatomic) NSString *bio;
+@property (nonatomic) NSString *expanded_url;
+@property (nonatomic) NSString *followingCount;
+@property (nonatomic) NSString *followerCount;
 @property (nonatomic) NSString *imageURL;
 
-- (instancetype)initWithName:(NSString *)fullName withUser:(NSString *)user andImage:(NSString *)image NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithName:(NSString *)fullName withUser:(NSString *)user andImage:(NSString *)image;
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+
++ (void)getUserInformationWithCompletion:(void(^)(User *userInfo))completion;
 
 @end

@@ -132,6 +132,9 @@
 
 - (IBAction)onShareButtonTapped:(id)sender {
     NSURL *url = [NSURL URLWithString:self.airport.locationURL];
+    if (url == nil) {
+        url = [NSURL URLWithString:@"http://gabemdev.com"];
+    }
     NSString *shareString = [NSString stringWithFormat:@"I'm at %@", self.airport.locationName];
     NSArray *shareItems = @[shareString, url];
     UIActivityViewController *share = [[UIActivityViewController alloc] initWithActivityItems:shareItems applicationActivities:nil];

@@ -9,6 +9,7 @@
 #import "ProfileViewController.h"
 #import <TwitterKit/TwitterKit.h>
 #import "LoginViewController.h"
+#import "User.h"
 
 @interface ProfileViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
@@ -17,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *bioLabel;
 @property (weak, nonatomic) IBOutlet UILabel *followerLabel;
 @property (weak, nonatomic) IBOutlet UILabel *followingLabel;
+@property User *user;
 
 @end
 
@@ -66,61 +68,75 @@
 }
 
 - (void)getLargeProfile {
-    [[[Twitter sharedInstance] APIClient] loadUserWithID:[[Twitter sharedInstance] session].userID completion:^(TWTRUser *user, NSError *error) {
-        if (user) {
-            NSString *userString = @"https://api.twitter.com/1.1/users/show.json";
-            NSDictionary *params = @{@"screen_name" : [user screenName]};
-            NSError *error;
-            NSURLRequest *request = [[[Twitter sharedInstance] APIClient] URLRequestWithMethod:@"GET"
-                                                                                           URL:userString
-                                                                                    parameters:params
-                                                                                         error:&error];
-            if (request) {
-                [[[Twitter sharedInstance] APIClient] sendTwitterRequest:request completion:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-                    if (data) {
-                        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&connectionError];
-                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                            // Profile Image
-                            NSString *image = [NSString stringWithFormat:@"%@", json[@"profile_image_url"]];
-                            image = [image stringByReplacingOccurrencesOfString:@"_normal" withString:@"_reasonably_small"];
-                            NSURL *url = [NSURL URLWithString:image];
-                            NSData *data = [NSData dataWithContentsOfURL:url];
-
-                            // Profile Info
-                            NSString *name = [NSString stringWithFormat:@"%@", json[@"name"]];
-                            NSString *bio = [NSString stringWithFormat:@"%@", json[@"description"]];
-
-                            //Profile links
-                            NSDictionary *urls = json[@"entities"][@"url"];
-                            NSArray *urlArray = urls[@"urls"];
-                            NSString *expanded_url = [NSString stringWithFormat:@"%@", urlArray[0][@"expanded_url"]];
-
-                            //Follower info
-                            NSString *followingCount = [NSString stringWithFormat:@"%@", json[@"friends_count"]];
-                            NSString *followerCount = [NSString stringWithFormat:@"%@", json[@"followers_count"]];
-                            dispatch_async(dispatch_get_main_queue(), ^{
-                                self.profileImage.image = [UIImage imageWithData:data];
-                                self.profileName.text = name;
-                                self.bioLabel.text = bio;
-                                self.followingLabel.text = followingCount;
-                                self.followerLabel.text = followerCount;
-                                 NSLog(@"%@", expanded_url);
-                
-                                [self saveUserName:name withBio:bio andImage:image];
-                            });
-                            
-                        });
-
-                    } else {
-                        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error!" message:connectionError.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
-                        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
-                        [alert addAction:cancel];
-                        [self presentViewController:alert animated:YES completion:nil];
-                    }
-                }];
-            }
-        }
+//    [[[Twitter sharedInstance] APIClient] loadUserWithID:[[Twitter sharedInstance] session].userID completion:^(TWTRUser *user, NSError *error) {
+//        if (user) {
+//            NSString *userString = @"https://api.twitter.com/1.1/users/show.json";
+//            NSDictionary *params = @{@"screen_name" : [user screenName]};
+//            NSError *error;
+//            NSURLRequest *request = [[[Twitter sharedInstance] APIClient] URLRequestWithMethod:@"GET"
+//                                                                                           URL:userString
+//                                                                                    parameters:params
+//                                                                                         error:&error];
+//            if (request) {
+//                [[[Twitter sharedInstance] APIClient] sendTwitterRequest:request completion:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+//                    if (data) {
+//                        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&connectionError];
+//                        NSLog(@"%@", json);
+//                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//                            // Profile Image
+//                            NSString *image = [NSString stringWithFormat:@"%@", json[@"profile_image_url"]];
+//                            image = [image stringByReplacingOccurrencesOfString:@"_normal" withString:@"_reasonably_small"];
+//                            NSURL *url = [NSURL URLWithString:image];
+//                            NSData *data = [NSData dataWithContentsOfURL:url];
+//
+//                            // Profile Info
+//                            NSString *name = [NSString stringWithFormat:@"%@", json[@"name"]];
+//                            NSString *bio = [NSString stringWithFormat:@"%@", json[@"description"]];
+//
+//                            //Profile links
+//                            NSDictionary *urls = json[@"entities"][@"url"];
+//                            NSArray *urlArray = urls[@"urls"];
+//                            NSString *expanded_url = [NSString stringWithFormat:@"%@", urlArray[0][@"expanded_url"]];
+//
+//                            //Follower info
+//                            NSString *followingCount = [NSString stringWithFormat:@"%@", json[@"friends_count"]];
+//                            NSString *followerCount = [NSString stringWithFormat:@"%@", json[@"followers_count"]];
+//                            dispatch_async(dispatch_get_main_queue(), ^{
+//                                self.profileImage.image = [UIImage imageWithData:data];
+//                                self.profileName.text = name;
+//                                self.bioLabel.text = bio;
+//                                self.followingLabel.text = followingCount;
+//                                self.followerLabel.text = followerCount;
+//                                 NSLog(@"%@", expanded_url);
+//                
+//                                [self saveUserName:name withBio:bio andImage:image];
+//                            });
+//                            
+//                        });
+//
+//                    } else {
+//                        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error!" message:connectionError.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+//                        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
+//                        [alert addAction:cancel];
+//                        [self presentViewController:alert animated:YES completion:nil];
+//                    }
+//                }];
+//            }
+//        }
+//    }];
+    [User getUserInformationWithCompletion:^(User *userInfo) {
+        self.user = userInfo;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.user.imageURL]];
+            self.profileImage.image = [UIImage imageWithData:data];
+            self.profileName.text = self.user.name;
+            self.bioLabel.text = self.user.bio;
+            self.followingLabel.text = self.user.followingCount;
+            self.followerLabel.text = self.user.followerCount;
+            NSLog(@"%@", self.user.expanded_url);
+        });
     }];
+
 }
 
 

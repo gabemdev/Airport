@@ -20,7 +20,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *accuracyLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *indoorMap;
 @property (weak, nonatomic) IBOutlet UILabel *uuidLabel;
-@property (weak, nonatomic) IBOutlet UILabel *proximityLabel;
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *headingLabel;
 @property NSString *location;

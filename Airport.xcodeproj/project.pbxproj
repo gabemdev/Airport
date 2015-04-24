@@ -14,6 +14,7 @@
 		6D3CF1F71AE4CBA100AF0758 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D3CF1F61AE4CBA000AF0758 /* Social.framework */; };
 		6D3CF1F91AE4CBAA00AF0758 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D3CF1F81AE4CBAA00AF0758 /* MobileCoreServices.framework */; };
 		6D5BC6451AE173EA0074E378 /* BeaconViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D5BC6441AE173EA0074E378 /* BeaconViewController.m */; };
+		6D7E8A5E1AE8230800B2C2EC /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D7E8A5D1AE8230800B2C2EC /* SettingsViewController.m */; };
 		6D89972C1ADECCA50030ABE5 /* AirportDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D89972B1ADECCA50030ABE5 /* AirportDetailViewController.m */; };
 		6D8997301ADF299C0030ABE5 /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D89972F1ADF299C0030ABE5 /* CustomTableViewCell.m */; };
 		6D8997331ADF2DFB0030ABE5 /* SelectedDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D8997321ADF2DFB0030ABE5 /* SelectedDetailViewController.m */; };
@@ -62,6 +63,8 @@
 		6D3CF1F81AE4CBAA00AF0758 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		6D5BC6431AE173EA0074E378 /* BeaconViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BeaconViewController.h; path = Classes/BeaconViewController.h; sourceTree = "<group>"; };
 		6D5BC6441AE173EA0074E378 /* BeaconViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BeaconViewController.m; path = Classes/BeaconViewController.m; sourceTree = "<group>"; };
+		6D7E8A5A1AE8008F00B2C2EC /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsViewController.h; path = Classes/SettingsViewController.h; sourceTree = "<group>"; };
+		6D7E8A5D1AE8230800B2C2EC /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		6D89972A1ADECCA50030ABE5 /* AirportDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AirportDetailViewController.h; path = Classes/AirportDetailViewController.h; sourceTree = "<group>"; };
 		6D89972B1ADECCA50030ABE5 /* AirportDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AirportDetailViewController.m; path = Classes/AirportDetailViewController.m; sourceTree = "<group>"; };
 		6D89972E1ADF299C0030ABE5 /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomTableViewCell.h; path = Custom/CustomTableViewCell.h; sourceTree = "<group>"; };
@@ -222,6 +225,8 @@
 				6D8997321ADF2DFB0030ABE5 /* SelectedDetailViewController.m */,
 				6D5BC6431AE173EA0074E378 /* BeaconViewController.h */,
 				6D5BC6441AE173EA0074E378 /* BeaconViewController.m */,
+				6D7E8A5A1AE8008F00B2C2EC /* SettingsViewController.h */,
+				6D7E8A5D1AE8230800B2C2EC /* SettingsViewController.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -440,6 +445,7 @@
 				6DC812FE1ADEB755000AF071 /* Airport.m in Sources */,
 				6D5BC6451AE173EA0074E378 /* BeaconViewController.m in Sources */,
 				6DC812FB1ADE1B63000AF071 /* Constants.m in Sources */,
+				6D7E8A5E1AE8230800B2C2EC /* SettingsViewController.m in Sources */,
 				6D8997301ADF299C0030ABE5 /* CustomTableViewCell.m in Sources */,
 				6DD5F8BD1ADCB25700C997A6 /* LoginViewController.m in Sources */,
 			);
