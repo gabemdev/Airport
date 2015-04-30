@@ -40,6 +40,8 @@ static NSString *kFloorplanId = @"";
     [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
     [[UIApplication sharedApplication] registerForRemoteNotifications];
 
+    [self setAppearance];
+
     return YES;
 }
 
@@ -89,6 +91,16 @@ static NSString *kFloorplanId = @"";
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:notification.alertBody message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [alert show];
+}
+
+#pragma mark - Appearance
+- (void)setAppearance {
+    UINavigationBar *navigationBar = [UINavigationBar appearance];
+    [navigationBar setBarStyle:UIBarStyleBlack];
+    [navigationBar setBarTintColor:[UIColor colorWithRed:0.14 green:0.33 blue:0.56 alpha:1.00]];
+    [navigationBar setTitleTextAttributes:@{
+                                            NSForegroundColorAttributeName: [UIColor whiteColor]
+                                            }];
 }
 
 @end

@@ -27,8 +27,8 @@
         self.username = [NSString stringWithFormat:@"%@", dictionary[@"screen_name"]];
         self.bio = [NSString stringWithFormat:@"%@", dictionary[@"description"]];
 
-        self.imageURL = [NSString stringWithFormat:@"%@", dictionary[@"profile_image_url"]];
-        self.imageURL = [self.imageURL stringByReplacingOccurrencesOfString:@"_normal" withString:@"_reasonably_small"];
+        self.imageURL = [NSString stringWithFormat:@"%@", dictionary[@"profile_image_url_https"]];
+        self.imageURL = [self.imageURL stringByReplacingOccurrencesOfString:@"_normal" withString:@""];
 
         //Profile links
         NSDictionary *urls = dictionary[@"entities"][@"url"];
